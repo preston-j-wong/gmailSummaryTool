@@ -84,17 +84,6 @@ crontab -l
 
 ---
 
-## Security
-
-This project includes several built-in security features:
-
-- **XSS Protection**: All AI-generated content is HTML-escaped before being sent via email to prevent malicious script execution.
-- **Prompt Hardening**: Uses specific delimiters and security instructions to mitigate indirect prompt injection from malicious emails.
-- **Data Isolation**: The `summaries/` directory and `.env` file are restricted to the owner (`chmod 700/600`).
-- **Secure Transport**: Uses IMAP/SSL and SMTP/STARTTLS for all Gmail communications.
-
----
-
 ## Files
 
 | File | Purpose |
