@@ -27,7 +27,7 @@ load_dotenv()
 GMAIL_ADDRESS    = os.environ["GMAIL_ADDRESS"]
 GMAIL_APP_PASS   = os.environ["GMAIL_APP_PASSWORD"]
 OLLAMA_HOST      = os.getenv("OLLAMA_HOST", "http://localhost:11434")
-OLLAMA_MODEL     = os.getenv("OLLAMA_MODEL", "gemma4:e2b")
+OLLAMA_MODEL     = os.environ["OLLAMA_MODEL"]
 SUMMARIES_DIR    = Path(__file__).parent / "summaries"
 BODY_CHAR_LIMIT  = 3000   # per email, to keep prompt size sane
 
