@@ -28,6 +28,7 @@ GMAIL_ADDRESS    = os.environ["GMAIL_ADDRESS"]
 GMAIL_APP_PASS   = os.environ["GMAIL_APP_PASSWORD"]
 OLLAMA_HOST      = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 OLLAMA_MODEL     = os.environ["OLLAMA_MODEL"]
+SEND_TIME        = os.environ["SEND_TIME"]          # HH:MM in 24-hour format
 SUMMARIES_DIR    = Path(__file__).parent / "summaries"
 BODY_CHAR_LIMIT  = 3000   # per email, to keep prompt size sane
 
@@ -334,6 +335,7 @@ def send_summary_email(summary: str, email_count: int, date_str: str) -> None:
 def main() -> None:
     now = datetime.now()
     date_str = now.strftime("%Y-%m-%d")
+    print(f"[{now:%Y-%m-%d %H:%M:%S}] Scheduled send time: {SEND_TIME}")
     print(f"[{now:%Y-%m-%d %H:%M:%S}] Fetching emails from the last 24 hours...")
 
     emails = fetch_recent_emails()

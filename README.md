@@ -1,6 +1,6 @@
 # Gmail AI Summarizer
 
-Fetches the last 24 hours of Gmail, summarizes with a local Ollama model, saves the summary to disk, and emails it back to you — runs daily at 7 PM via cron.
+Fetches the last 24 hours of Gmail, summarizes with a local Ollama model, saves the summary to disk, and emails it back to you — runs daily at a inputted time.
 
 ## How it works
 
@@ -14,14 +14,7 @@ Fetches the last 24 hours of Gmail, summarizes with a local Ollama model, saves 
 
 ## Setup (on the Ollama machine)
 
-### 1. Transfer the project
-
-From your other machine:
-```bash
-scp -r /path/to/aiProject user@ollama-machine:~/aiProject
-```
-
-### 2. Create a Gmail App Password
+1 . Create a Gmail App Password
 
 > Required because Google blocks plain password login for IMAP/SMTP.
 
@@ -30,7 +23,7 @@ scp -r /path/to/aiProject user@ollama-machine:~/aiProject
 3. Search for **App Passwords** → create one named "Email Summarizer"
 4. Copy the 16-character password (format: `xxxx xxxx xxxx xxxx`)
 
-### 3. Configure credentials
+### 2. Configure credentials
 
 ```bash
 cd ~/aiProject
@@ -38,14 +31,14 @@ cp .env.example .env
 nano .env          # fill in GMAIL_ADDRESS and GMAIL_APP_PASSWORD
 ```
 
-### 4. Install dependencies
+### 3. Install dependencies
 
 ```bash
 chmod +x setup.sh
 ./setup.sh
 ```
 
-### 5. Test it
+### 4. To run a tester email
 
 ```bash
 .venv/bin/python gmail_summarizer.py
