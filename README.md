@@ -6,7 +6,7 @@ Fetches the last 24 hours of Gmail, summarizes with a local Ollama model, saves 
 
 1. Connects to Gmail over IMAP (SSL)
 2. Pulls every email received in the last 24 hours
-3. Sends the combined content to `gemma4:e2b` running in Ollama
+3. Sends the combined content to any local model running in Ollama
 4. Saves the summary as a Markdown file in `summaries/`
 5. Sends the summary back to your Gmail address via SMTP
 
@@ -16,11 +16,9 @@ Fetches the last 24 hours of Gmail, summarizes with a local Ollama model, saves 
 
 1 . Create a Gmail App Password
 
-> Required because Google blocks plain password login for IMAP/SMTP.
-
 1. Go to myaccount.google.com/security
 2. Enable **2-Step Verification** if not already on
-3. Search for **App Passwords** → create one named "Email Summarizer"
+3. Search for **App Passwords** → create one
 4. Copy the 16-character password (format: `xxxx xxxx xxxx xxxx`)
 
 ### 2. Configure credentials
