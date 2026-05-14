@@ -122,8 +122,12 @@ def fetch_recent_emails() -> list[dict]:
         except Exception:
             pass  # keep it if we can't parse the date
 
+        subject = _decode_str(msg.get("Subject"))
+        if subject.startswith("Daily Email Summary"):
+            continue
+
         emails.append({
-            "subject": _decode_str(msg.get("Subject")),
+            "subject": subject,
             "from":    _decode_str(msg.get("From")),
             "date":    date_header,
             "body":    _extract_body(msg),
@@ -139,7 +143,7 @@ def fetch_recent_emails() -> list[dict]:
 
 def summarize_with_ollama(emails: list[dict]) -> str:
     if not emails:
-        return "No emails were received in the last 24 hours."
+        return "No new emails were found to summarize in the last 24 hours."
 
     blocks = []
     for i, e in enumerate(emails, 1):
