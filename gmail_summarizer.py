@@ -197,20 +197,33 @@ def save_summary(summary: str, email_count: int, date_str: str) -> Path:
     return filepath
 
 
+def _md_to_html(text: str) -> str:
+    """Convert inline markdown to HTML. Call AFTER html_mod.escape()."""
+    text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
+    text = re.sub(r'\*(.+?)\*',     r'<em>\1</em>',         text)
+    return text
+
+
 def _build_html(summary: str, email_count: int, date_str: str) -> str:
     summary_html = ""
     for line in summary.splitlines():
         stripped = line.strip()
         if not stripped:
             continue
-        if stripped.startswith("**") and stripped.endswith("**"):
-            safe = html_mod.escape(stripped.strip("*"))
+        if stripped.startswith("### "):
+            safe = _md_to_html(html_mod.escape(stripped[4:]))
+            summary_html += f"<h4>{safe}</h4>\n"
+        elif stripped.startswith("## "):
+            safe = _md_to_html(html_mod.escape(stripped[3:]))
             summary_html += f"<h3>{safe}</h3>\n"
-        elif stripped.startswith("- ") or stripped.startswith("• "):
-            safe = html_mod.escape(stripped[2:])
+        elif stripped.startswith("# "):
+            safe = _md_to_html(html_mod.escape(stripped[2:]))
+            summary_html += f"<h2>{safe}</h2>\n"
+        elif stripped.startswith("- ") or stripped.startswith("• ") or stripped.startswith("* "):
+            safe = _md_to_html(html_mod.escape(stripped[2:]))
             summary_html += f"<li>{safe}</li>\n"
         else:
-            safe = html_mod.escape(stripped)
+            safe = _md_to_html(html_mod.escape(stripped))
             summary_html += f"<p>{safe}</p>\n"
 
     return f"""<!DOCTYPE html>
@@ -265,12 +278,27 @@ def _build_html(summary: str, email_count: int, date_str: str) -> str:
     line-height: 1.7;
     color: #333;
   }}
+  .body h2 {{
+    color: #1a1a2e;
+    font-size: 17px;
+    font-weight: 700;
+    margin: 24px 0 8px 0;
+    border-left: 4px solid #1a6fa8;
+    padding-left: 10px;
+  }}
   .body h3 {{
     color: #1a1a2e;
     font-size: 15px;
     font-weight: 600;
-    margin: 20px 0 6px 0;
+    margin: 18px 0 6px 0;
     border-left: 3px solid #1a6fa8;
+    padding-left: 10px;
+  }}
+  .body h4 {{
+    color: #444;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 14px 0 4px 0;
     padding-left: 10px;
   }}
   .body p {{
