@@ -12,7 +12,7 @@ Fetches the last 24 hours of Gmail, summarizes with a local Ollama model, saves 
 
 ---
 
-## Setup (on the Ollama machine)
+## Setup
 
 1 . Create a Gmail App Password
 
